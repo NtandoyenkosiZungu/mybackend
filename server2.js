@@ -13,6 +13,11 @@ app.use(cors());
 
 
 
+app.get("/", (req, res)=> {
+    res.send({message: 'Server is active'})
+})
+
+
 //Defining the signup route
 app.post("/signup", async (req, res)=> {
     
