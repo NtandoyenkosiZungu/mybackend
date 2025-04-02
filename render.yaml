@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: my-express-app
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server2.js
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: FIREBASE_CONFIG
+        sync: false  # If you have Firebase credentials, set them manually in Render
