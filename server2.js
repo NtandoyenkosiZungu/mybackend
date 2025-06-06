@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const {db, auth} = require("./firebase");
+const {generatePDF, generateHTMLContentTwo, generateHTMLContentOne} = require("./template-functions/functions.js");
 
 const app = express();
 
@@ -82,6 +83,34 @@ app.post("/login", async (req, res)=> {
 })
 
 
+
+app.post('/download-resume', async (req, res)=> {
+    try{
+        const {template, userDetails} = req.body
+        console.log(template, userDetails)
+
+        if (!template || !userDetails){
+            return res.status(400).send("Template/ Data is missing")
+        }
+        if (template === "template-one"){
+            var htmlContent = generateHTMLContentOne(userDetails);
+        } else if (template === "template-two"){
+            var htmlContent = generateHTMLContentTwo(userDetails);
+        }
+
+        const pdfBuffer = await generatePDF(htmlContent)
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
+        
+        res.write(pdfBuffer);
+        res.end();
+
+    }   catch(error){
+        console.error("Error generating PDF:", error);
+        res.status(500).send({message: "Something went wrong"});
+    }
+})
 
 const PORT = process.env.PORT || 5000
 

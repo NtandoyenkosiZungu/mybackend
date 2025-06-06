@@ -1,0 +1,103 @@
+#none-display{
+    display: none;
+}
+
+img{
+    width: 15px;
+    height: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+section {
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid #777575;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+div.heading {
+    width: 100%;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+div.content {
+    display: grid;
+    grid-template-columns: 50% 48%;
+    gap: 2%;
+    padding: 10px;
+}
+
+div.content > div.right {
+    text-align: right;
+}
+
+pre{
+    padding: 0;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    font-weight: 500;
+    color: #000;
+    width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+section.personal-details {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    gap: 20%;
+
+    font-size: 13.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+}
+
+
+section.personal-details > div > span > p.role {
+    font-size: 130%;
+    font-weight: 500;
+}
+
+section.personal-details > div > span > p.title {
+    font-weight: 500;
+    font-size: 195%;
+}
+
+section.personal-details > div > p {
+    display: flex;
+    border-bottom: 1px solid #777575;
+    padding-bottom: 5px;
+}
+
+div.content {
+    display: grid;
+    grid-template-columns: 50% 48%;
+    gap: 2%;
+    padding: 0;
+}
+
+div.content > div.left {
+    text-align: left;
+}
+
+div.content > div.right {
+    text-align: right;
+}
+
+div.description > div{
+    /*font-size: 95%;*/
+    font-weight: 500;
+}
