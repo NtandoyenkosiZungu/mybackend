@@ -125,7 +125,7 @@ function generateHTMLContentTwo(template, userDetails){
         htmlContent.replaceAll("{{references-none-display}}", "none-display");
     }
 
-    fs.writeFileSync(path.join(__dirname, "templates/output", `${userDetails.userId}-${template}.html`), htmlContent);
+    //fs.writeFileSync(path.join(__dirname, "templates/output", `${userDetails.userId}-${template}.html`), htmlContent);
     return htmlContent;
 }
 
@@ -184,7 +184,7 @@ function generateHTMLContentOne(userDetails){
         htmlContent = htmlContent.replaceAll("{{achievements}}", "none-display");
     }
 
-    fs.writeFileSync(path.join(__dirname, "templates/output", `${userDetails.userId}-template-one.html`), htmlContent);
+    //fs.writeFileSync(path.join(__dirname, "templates/output", `${userDetails.userId}-template-one.html`), htmlContent);
     return htmlContent;
 }
 
@@ -229,7 +229,7 @@ async function generatePDF(htmlContent) {
 
     // Save to disk
     const outputPath = path.join(__dirname, 'resume.pdf');
-    fs.writeFileSync(outputPath, pdfBuffer);
+    //fs.writeFileSync(outputPath, pdfBuffer);
 
     await browser.close();
     return pdfBuffer;
