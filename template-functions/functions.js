@@ -221,9 +221,6 @@ async function generatePDF(htmlContent) {
 
     await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
 
-    // Inject external CSS
-    await page.addStyleTag({ path: path.join(__dirname, "templates/styles", "template-two.css") });
-
     // Generate PDF buffer
     const pdfBuffer = await page.pdf({ format: 'A4' });
 
