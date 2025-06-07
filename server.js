@@ -101,8 +101,11 @@ app.post('/download-resume', async (req, res)=> {
 
         const pdfBuffer = await generatePDF(htmlContent)
 
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'attachment; filename="resume.pdf"',
+            'Content-Length': pdfBuffer.length,
+        });
         
         res.write(pdfBuffer);
         res.end();
