@@ -1,124 +1,120 @@
 require("dotenv").config();
 
 const express = require("express");
-const cors = require("cors")
-const {db, auth} = require("./firebase")
-
+const cors = require("cors");
+const {db, auth} = require("./firebase.js");
+const {generatePDF, generateHTMLContentTwo, generateHTMLContentOne} = require("./template-functions/functions.js");
 
 const app = express();
-//Middleware 
-app.use(cors());
+
+
+//Defining Middleware
 app.use(express.json());
+app.use(cors());
 
 
 
-//Test route to add data 
-app.get("/add-data", async (req, res) => {
+app.get("/", (req, res)=> {
+    res.send({message: 'Server is active'})
+})
+
+
+//Defining the signup route
+app.post("/signup", async (req, res)=> {
     
     try{
-        const useRef = db.collection("users").doc("testUser")
-        await useRef.set({
-            username: "Ntandoyenkosi",
-            email: "ntandoyenkosizungu7@gmail.com",
+        //Right here the code extract the following data from the request body, using array destructuring
+        const {email, password, username} = req.body;
+
+        //Checking if all the data is available/present
+        if(!email || !password || !username){
+            return res.status(400).send({message: "All fields are required"});
+        }
+
+        //This creates a record of the user's authentification details
+        const userRecord = await auth.createUser({
+            email,
+            password,
+            displayName: username,
+        });
+
+        //Save User Data in firestore (firabase database)
+        const useRef = db.collection("users").doc(userRecord.uid);
+        useRef.set({
+            email: userRecord.email,
+            username: userRecord.displayName,
+            userId: userRecord.uid,
             createdAt: new Date()
         });
 
-        res.send({message: "User added successfully"})
-    } catch(error) {
-        res.status(500).send({error: error.message});
-    }
-    
-})
+        //Sends a response to the client that the user has successfuly registered
+        res.status(200).send({
+            message: "Successfully registered user",
+            userId: userRecord.uid,
+            email: userRecord.email
+        })
 
-//Test dynamic user addition route 
-app.post("/dynamic-user", async (req, res)=> {
-    try{
-
-        const {userId, username, email} = req.body;
-
-        if(!username || !email || !userId){
-            return res.status(400).send("All fields are required")
-        }
-
-        const useRef = db.collection("users").doc(userId);
-        await useRef.set(
-            {
-                username,
-                email,
-                createdAt: new Date()
-            }
-        );
-
-        res.status(201).send({message: "user added successfully"})
-    }catch (error){
-        res.status(500).send({error: error.message});
-    }
-});
-
-
-//Test user fetching route
-app.get("/fetch-user", async (req, res)=> {  
-    try{
-        const {userId} = req.body;
-        console.log(req.body)
-        if(!userId){
-            return res.status(400).send("Missing email requirement");
-        }
-
-        //console.log(email);
-        const useRef = db.collection("users").doc(userId);
-        const doc = await useRef.get();
-
-        if(!doc.exists){
-            return res.status(404).send({message: "User Not Found"});
-        }
-
-        res.status(200).send(doc.data())
-
-    } catch (error){
-        res.status(500).send({message: "missing email, failed to fetch user"})
-    }
-})
-
-//Testing data modification route
-app.put("/update", async(req, res) => {
-    try{
-        const {userId, username, email} = req.body;
-
-        if(!userId || !username || !email){
-            return res.status(400).send({message: "all fields are required"});
-        }
-
-        const useRef = db.collection("users").doc(userId);
-        const doc = await useRef.get();
-
-        if (!doc.exists){
-            return res.status(400).send({message: "Document does not exist"})
-        }
-
-        await useRef.update({
-            username,
-            email,
-            updatedAt: new Date()
-        });
-
-        return res.status(201).send({message: "Document successfully modified"})
-    }catch (error){
+    } catch (error) {
         res.status(500).send({message: error.message})
     }
 })
 
+//LogIn route
+app.post("/login", async (req, res)=> {
+   try{
+        const {email, password} = req.body;
 
+        if(!email || !password){
+            return res.status(400).send({message: "All fields are required"});
+        }
 
-app.get("/", (req, res) => {
-    res.send({message: "It's ALIVE!!!!!!!!!!!!!!"})
-});
+        const userRecord = await auth.getUserByEmail(email);
 
+        const firebaseToken = await auth.createCustomToken(userRecord.uid);
 
-//Start server
-const PORT = process.env.PORT || 5000;
+        res.status(200).send({
+            message: "Login Successful",
+            token: firebaseToken,
+            username: userRecord.displayName,
+        })
+   } catch(error) {
+        res.status(500).send({message: error.message});
+   }
 
-app.listen(PORT, ()=> {
-    console.log(`Server is running on PORT ${PORT}`)
 })
 
+
+
+app.post('/download-resume', async (req, res)=> {
+    try{
+        const {template, userDetails} = req.body
+        console.log(template, userDetails)
+
+        if (!template || !userDetails){
+            return res.status(400).send("Template/ Data is missing")
+        }
+        if (template === "template-one"){
+            var htmlContent = generateHTMLContentOne(userDetails);
+        } else if (template === "template-two"){
+            var htmlContent = generateHTMLContentTwo(userDetails);
+        }
+
+        const pdfBuffer = await generatePDF(htmlContent)
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
+        
+        res.write(pdfBuffer);
+        res.end();
+
+    }   catch(error){
+        console.error("Error generating PDF:", error);
+        res.status(500).send({message: "Something went wrong"});
+    }
+})
+
+const PORT = process.env.PORT || 5000
+
+app.listen(PORT, ()=> {
+    console.log(`server is active on port ${PORT}`)
+})
