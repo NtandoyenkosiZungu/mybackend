@@ -4,6 +4,7 @@ const fs = require("fs");
 const {workExperienceTemplateTwo, educationTemplateTwo, projectsTemplateTwo, certificationsTemplateTwo} = require('./template_two_funcs');
 const {workExperienceTemplateOne, educationTemplateOne, projectsTemplateOne, certificationsTemplateOne} = require('./template_one_funcs');
 
+require('dotenv').config();
 
 
 function writePersonalDetails(userDetails, htmlContent){
@@ -217,8 +218,16 @@ async function generateLocalPDF(htmlContent){
 
 async function generatePDF(htmlContent) {
     const browser = await puppeteer.launch({
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--single-process',
+            '--no-zygote', 
+        ],
+        executablePath: process.env.NODE_ENV === 'production' 
+            ? process.env.PUPPETEER_EXECUTABLE_PATH 
+            : puppeteer.executablePath(),
         headless: 'new',
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
     try{
