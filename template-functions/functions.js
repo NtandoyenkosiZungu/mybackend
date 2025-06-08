@@ -220,19 +220,27 @@ async function generatePDF(htmlContent) {
         headless: 'new',
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
-    const page = await browser.newPage();
 
-    await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+    try{
+        const page = await browser.newPage();
 
-    // Generate PDF buffer
-    const pdfBuffer = await page.pdf({ format: 'A4' });
+        await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
 
-    // Save to disk
-    const outputPath = path.join(__dirname, 'resume.pdf');
-    //fs.writeFileSync(outputPath, pdfBuffer);
+        // Generate PDF buffer
+        const pdfBuffer = await page.pdf({ format: 'A4' });
 
-    await browser.close();
-    return pdfBuffer;
+        // Save to disk
+        const outputPath = path.join(__dirname, 'resume.pdf');
+        //fs.writeFileSync(outputPath, pdfBuffer);
+
+        await browser.close();
+        return pdfBuffer;
+    }catch (error){
+        console.log("Error generating PDF:", error);
+        throw error;
+    }finally {
+        await browser.close();
+    }
 }
 
 
