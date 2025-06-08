@@ -53,8 +53,7 @@ function writePersonalDetails(userDetails, htmlContent){
 
 
 function generateHTMLContentTwo(template, userDetails){
-    const templatePath = path.join(__dirname, "templates/templates", `${template}.html`);
-
+    const templatePath = path.join(__dirname, "templates/templates", 'template-two.html');
     let htmlContent = fs.readFileSync(templatePath, "utf-8");
 
     // Write personal details
