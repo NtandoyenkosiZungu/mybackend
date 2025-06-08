@@ -34,6 +34,7 @@ function educationTemplateOne(jsonObject){
                     <span>
                     ${jsonObject.education[i].location}
                     </span>
+                    <br>
                     <span>
                         ${jsonObject.education[i].start_date} - ${jsonObject.education[i].end_date}
                     </span>

@@ -160,13 +160,21 @@ function generateHTMLContentOne(userDetails){
     }
 
     if (userDetails.technicalSkills.length > 0){
-        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Skills}}", userDetails.technicalSkills.skill);
+        let contentHTML = "";
+        for(let i = 0; i < userDetails.technicalSkills.length; i++){
+            contentHTML += userDetails.technicalSkills[i].skill;
+        }
+        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Skills}}", contentHTML);
     }else {
         htmlContent = htmlContent.replaceAll("{{tech-skills}}", "none-display");
     }
 
     if (userDetails.softSkills.length > 0){
-        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Soft Skills}}", userDetails.softSkills.skill);
+        let contentHTML = "";
+        for(let i = 0; i < userDetails.softSkills.length; i++){
+            contentHTML += userDetails.softSkills[i].skill;
+        }
+        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Soft Skills}}", contentHTML);
     }else {
         htmlContent = htmlContent.replaceAll("{{soft-skills}}", "none-display");
     }
