@@ -32,6 +32,9 @@ function educationTemplateOne(jsonObject){
                 </div>
                 <div class="right">
                     <span>
+                    ${jsonObject.education[i].location}
+                    </span>
+                    <span>
                         ${jsonObject.education[i].start_date} - ${jsonObject.education[i].end_date}
                     </span>
                 </div>
@@ -45,7 +48,7 @@ function projectsTemplateOne(jsonObject){
     for(let i = 0; i < jsonObject.project.length; i++){
         output +=`<div class="content">
             <div class="left">
-                ${jsonObject.project[i].project}| <a href="${jsonObject.project[i].link}">${jsonObject.project[i].link}</a>
+                ${jsonObject.project[i].project}| <a href="${jsonObject.project[i].link}" style="color: blue;">LINK</a>
             </div>
             </div>
             <div class="description">

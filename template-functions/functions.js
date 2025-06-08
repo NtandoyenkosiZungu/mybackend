@@ -59,51 +59,59 @@ function generateHTMLContentTwo(template, userDetails){
     // Write personal details
     htmlContent = writePersonalDetails(userDetails, htmlContent);
 
-    if (userDetails.education){
+    if (userDetails.education.length > 0){
         let educationHtml = "";
         for (let i = 0; i < userDetails.education.length; i++){
             educationHtml += educationTemplateTwo(userDetails);
         }
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Education}}", educationHtml);
     }else {
-        htmlContent.replaceAll("{{education-none-display}}", "none-display");
+        htmlContent = htmlContent.replaceAll("{{education}}", "none-display");
     }
 
-    if (userDetails.experience){
+    if (userDetails.experience.length > 0){
         console.log("Entered")
         let experienceHtml = workExperienceTemplateTwo(userDetails);
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Experience}}", experienceHtml);
     }else {
-        htmlContent.replaceAll("{{experience-none-display}}", "none-display");
-    }
-    
-    if (userDetails.technicalSkills){
-        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Skills}}", userDetails.technicalSkills.skill);
-    }else {
-        htmlContent.replaceAll("{{skills-none-display}}", "none-display");
+        htmlContent = htmlContent.replaceAll("{{experience}}", "none-display");
     }
 
-    if (userDetails.softSkills){
-        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Soft Skills}}", userDetails.softSkills.skill);
+    if (userDetails.technicalSkills.length > 0){
+        let contentHTML = "";
+        for(let i = 0; i < userDetails.technicalSkills.length; i++){
+            contentHTML += userDetails.technicalSkills[i].skill;
+        }
+        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Skills}}", contentHTML);
     }else {
-        htmlContent.replaceAll("{{soft-skills-none-display}}", "none-display");
+        htmlContent = htmlContent.replaceAll("{{tech-skills}}", "none-display");
     }
 
-    if (userDetails.project){
+    if (userDetails.softSkills.length > 0){
+        let contentHTML = "";
+        for(let i = 0; i < userDetails.softSkills.length; i++){
+            contentHTML += userDetails.softSkills[i].skill;
+        }
+        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Soft Skills}}", contentHTML);
+    }else {
+        htmlContent = htmlContent.replaceAll("{{soft-skills}}", "none-display");
+    }
+
+    if (userDetails.project.length > 0){
         let projectsHtml = projectsTemplateTwo(userDetails)
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Projects}}", projectsHtml);
     }else {
-        htmlContent.replaceAll("{{projects-none-display}}", "none-display");
+        htmlContent = htmlContent.replaceAll("{{projects}}", "none-display");
     }
 
-    if (userDetails.certification){
+    if (userDetails.certification.length > 0){
         let certificationsHtml = certificationsTemplateTwo(userDetails) ;
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Certifications}}", certificationsHtml);
     }else {
-        htmlContent.replaceAll("{{certifications-none-display}}", "none-display");
+        htmlContent = htmlContent.replaceAll("{{certifications}}", "none-display");
     }
 
-    if (userDetails.achievements){
+    if (userDetails.achievements.length > 0){
         let achievementsHtml = "";
         for (let i = 0; i < userDetails.achievements.length; i++){
             achievementsHtml += `
@@ -111,10 +119,10 @@ function generateHTMLContentTwo(template, userDetails){
         }
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Achievements}}", achievementsHtml);
     }else {
-        htmlContent.replaceAll("{{achievements-none-display}}", "none-display");
+        htmlContent = htmlContent.replaceAll("{{achievements}}", "none-display");
     }
     
-    if (userDetails.references){
+    if (userDetails.references.length > 0){
         let referencesHtml = "";
         for (let i = 0; i < userDetails.references.length; i++){
             referencesHtml += `
@@ -122,7 +130,7 @@ function generateHTMLContentTwo(template, userDetails){
         }
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of References}}", referencesHtml);
     }else {
-        htmlContent.replaceAll("{{references-none-display}}", "none-display");
+        htmlContent = htmlContent.replaceAll("{{references}}", "none-display");
     }
 
     //fs.writeFileSync(path.join(__dirname, "templates/output", `${userDetails.userId}-${template}.html`), htmlContent);
@@ -136,7 +144,7 @@ function generateHTMLContentOne(userDetails){
     // Write personal details
     htmlContent = writePersonalDetails(userDetails, htmlContent);
 
-    if (userDetails.education){
+    if (userDetails.education.length > 0){
         let educationHtml = educationTemplateOne(userDetails);
         
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Education}}", educationHtml);
@@ -144,7 +152,7 @@ function generateHTMLContentOne(userDetails){
         htmlContent = htmlContent.replaceAll("{{education}}", "none-display");
     }
 
-    if (userDetails.experience){
+    if (userDetails.experience.length > 0){
         let experienceHtml = workExperienceTemplateOne(userDetails);
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Experience}}", experienceHtml);
     }else {
@@ -163,14 +171,14 @@ function generateHTMLContentOne(userDetails){
         htmlContent = htmlContent.replaceAll("{{soft-skills}}", "none-display");
     }
 
-    if (userDetails.project){
+    if (userDetails.project.length > 0){
         let projectsHtml = projectsTemplateOne(userDetails)
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Projects}}", projectsHtml);
     }else {
         htmlContent = htmlContent.replaceAll("{{projects}}", "none-display");
     }
 
-    if (userDetails.certification){
+    if (userDetails.certification.length > 0){
         let certificationsHtml = certificationsTemplateOne(userDetails) ;
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Certifications}}", certificationsHtml);
     }else {
