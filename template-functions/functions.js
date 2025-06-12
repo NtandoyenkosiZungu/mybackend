@@ -122,11 +122,11 @@ function generateHTMLContentTwo(userDetails){
         htmlContent = htmlContent.replaceAll("{{achievements}}", "none-display");
     }
     
-    if (userDetails.references.length > 0){
+    if (userDetails.reference.length > 0){
         let referencesHtml = "";
-        for (let i = 0; i < userDetails.references.length; i++){
+        for (let i = 0; i < userDetails.reference.length; i++){
             referencesHtml += `
-            <div>${userDetails.references[i].reference}</div>`
+            <div>${userDetails.reference[i].reference}</div>`
         }
         htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of References}}", referencesHtml);
     }else {
