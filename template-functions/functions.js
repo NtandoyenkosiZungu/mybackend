@@ -111,7 +111,7 @@ function generateHTMLContentTwo(userDetails){
         htmlContent = htmlContent.replaceAll("{{certifications}}", "none-display");
     }
 
-    if (userDetails.achievements.length > 0){
+    if (userDetails.achievement.length > 0){
         let achievementsHtml = "";
         for (let i = 0; i < userDetails.achievements.length; i++){
             achievementsHtml += `
