@@ -52,7 +52,7 @@ function writePersonalDetails(userDetails, htmlContent){
 }
 
 
-function generateHTMLContentTwo(template, userDetails){
+function generateHTMLContentTwo(userDetails){
     const templatePath = path.join(__dirname, "templates/templates", 'template-two.html');
     let htmlContent = fs.readFileSync(templatePath, "utf-8");
 
