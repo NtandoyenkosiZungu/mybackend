@@ -6,7 +6,9 @@ function workExperienceTemplateOne(jsonObject){
     for(let i = 0; i < jsonObject.experience.length; i++){
         output +=`<div class="content">
                 <div class="left">
-                    <span>${jsonObject.experience[i].workplace}</span><br>
+                    <b>
+                        <span>${jsonObject.experience[i].workplace}</span><br>
+                    </b>
                     <span>${jsonObject.experience[i].role}</span>
                 </div>
                 <div class="right">
@@ -27,7 +29,9 @@ function educationTemplateOne(jsonObject){
     for(let i = 0; i < jsonObject.education.length; i++){
         output += `<div class="content" id="{{education}}">
                 <div class="left">
-                    <span>${jsonObject.education[i].institution}</span> <br>
+                    <span>
+                        <b>${jsonObject.education[i].institution}</b>
+                    </span> <br>
                     <span>${jsonObject.education[i].level} in ${jsonObject.education[i].field}</span>
                 </div>
                 <div class="right">
@@ -49,7 +53,9 @@ function projectsTemplateOne(jsonObject){
     for(let i = 0; i < jsonObject.project.length; i++){
         output +=`<div class="content">
             <div class="left">
-                ${jsonObject.project[i].project}| <a href="${jsonObject.project[i].link}" style="color: blue;">LINK</a>
+                <b>
+                    ${jsonObject.project[i].project}| <a href="${jsonObject.project[i].link}" style="color: blue;">LINK</a>
+                </b>
             </div>
             </div>
             <div class="description">
@@ -57,7 +63,7 @@ function projectsTemplateOne(jsonObject){
             </div>
 
             <div class="tools">
-               <span><b>Tools:</b></span> ${jsonObject.project[i].tools.map(tool => `<span>${tool}</span>`).join('|')}
+               <span><b>Tools:</b></span> ${jsonObject.project[i].tools.map(tool => `<span>${tool}</span>`).join(' | ')}
             </div>`
     }
     return output;
