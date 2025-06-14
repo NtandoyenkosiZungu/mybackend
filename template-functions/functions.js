@@ -78,11 +78,12 @@ function generateHTMLContentTwo(userDetails){
     }
 
     if (userDetails.technicalSkills.length > 0){
+        
         let contentHTML = "";
         for(let i = 0; i < userDetails.technicalSkills.length; i++){
             contentHTML += userDetails.technicalSkills[i].skill;
         }
-        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Skills}}", contentHTML);
+        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Technical Of Skills}}", contentHTML);
     }else {
         htmlContent = htmlContent.replaceAll("{{tech-skills}}", "none-display");
     }
@@ -164,7 +165,7 @@ function generateHTMLContentOne(userDetails){
         for(let i = 0; i < userDetails.technicalSkills.length; i++){
             contentHTML += userDetails.technicalSkills[i].skill;
         }
-        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Skills}}", contentHTML);
+        htmlContent = htmlContent.replaceAll("{{Dynamic Listing Of Technical Skills}}", contentHTML);
     }else {
         htmlContent = htmlContent.replaceAll("{{tech-skills}}", "none-display");
     }
