@@ -18,7 +18,7 @@ app.get("/", (req, res)=> {
     res.send({message: 'Server is active'})
 })
 
-app.post("user-info", async (req, res) => {
+app.post("/user-info", async (req, res) => {
     try {
         const userId = req.body.userId; // Assuming userId is passed in the request body
         if (!userId) {
