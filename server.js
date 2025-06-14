@@ -18,6 +18,25 @@ app.get("/", (req, res)=> {
     res.send({message: 'Server is active'})
 })
 
+app.post("user-info", async (req, res) => {
+    try {
+        const userId = req.body.userId; // Assuming userId is passed in the request body
+        if (!userId) {
+            return res.status(400).send({message: "User ID is required"});
+        }
+
+        const userRef = db.collection("users").doc(userId);
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            return res.status(404).send({message: "User not found"});
+        }
+
+        res.status(200).send(userDoc.data().username);
+    } catch (error) {
+        res.status(500).send({message: error.message});
+    }
+})
 
 //Defining the signup route
 app.post("/signup", async (req, res)=> {
