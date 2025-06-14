@@ -54,7 +54,7 @@ function projectsTemplateOne(jsonObject){
         output +=`<div class="content">
             <div class="left">
                 <b>
-                    ${jsonObject.project[i].project}| <a href="${jsonObject.project[i].link}" style="color: blue;">LINK</a>
+                    ${jsonObject.project[i].project}| <a href="${jsonObject.project[i].link}" style="color: blue;" target="_blank" rel="noopener noreferrer">LINK</a>
                 </b>
             </div>
             </div>
@@ -76,7 +76,7 @@ function certificationsTemplateOne(jsonObject){
             <div class="content">
                 <div class="left"> 
                     <span>
-                        ${jsonObject.certification[i].provider} | ${jsonObject.certification[i].title}
+                        <b> ${jsonObject.certification[i].provider} | ${jsonObject.certification[i].title} </b>
                     </span>
                 </div>
                 <div class="right">
